@@ -20,7 +20,6 @@ class TerminalPainter extends CustomPainter {
   });
 
   paint(Canvas canvas, Size size) {
-    print("paint $paintCount");
     canvas.drawColor(Colors.black, BlendMode.color);
 
     for (var renderGlyph in display.allGlyphs) {
