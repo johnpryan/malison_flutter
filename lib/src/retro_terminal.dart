@@ -116,6 +116,9 @@ class Font {
         lineHeight = h;
 }
 
+/// An implementation of [Display] that exposes [RenderGlyphDisplay] objects. A
+/// [RenderGlyphDisplay] object contains x,y fields so that TerminalPainter
+/// can conveniently iterate over all the glyphs that have changed.
 class FlutterDisplay implements Display {
   /// The current display state. The glyphs here mirror what has been rendered.
   final Array2D<Glyph> glyphs;
@@ -131,10 +134,13 @@ class FlutterDisplay implements Display {
       : glyphs = Array2D(width, height),
         changedGlyphs = Array2D(width, height, Glyph.clear);
 
-  Iterable<RenderGlyphDisplay> get allGlyphs sync* {
+  /// Returns a [RenderGlyphDisplay] for any changed glyphs in the 2D array.
+  Iterable<RenderGlyphDisplay> get changedGlyphsRenderable sync* {
     for (var y = 0; y < height; y++) {
       for (var x = 0; x < width; x++) {
-        yield RenderGlyphDisplay(x, y, glyphs.get(x, y));
+        if (glyphs.get(x, y) != null) {
+          yield RenderGlyphDisplay(x, y, glyphs.get(x, y));
+        }
       }
     }
   }

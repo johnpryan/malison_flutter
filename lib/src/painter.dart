@@ -22,7 +22,7 @@ class TerminalPainter extends CustomPainter {
   paint(Canvas canvas, Size size) {
     canvas.drawColor(Colors.black, BlendMode.color);
 
-    for (var renderGlyph in display.allGlyphs) {
+    for (var renderGlyph in display.changedGlyphsRenderable) {
       var glyph = renderGlyph.glyph;
       var char = glyph.char;
       var font = this.font;
